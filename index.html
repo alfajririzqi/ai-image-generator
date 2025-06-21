@@ -15,17 +15,16 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a202c, #0d1117);
+            background-color: #1a202c; /* Dark background for the body */
         }
         .container {
             max-width: 90%;
             width: 768px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
         /* Custom spinner for loading state */
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #6366f1;
+            border: 4px solid rgba(255, 255, 255, 0.1); /* Lighter border for dark theme */
+            border-left-color: #6366f1; /* Indigo color for spinner */
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -42,17 +41,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
+            background-color: rgba(0, 0, 0, 0.9); /* Darker overlay for dark theme */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
+            backdrop-filter: blur(8px); /* Slightly more blur */
         }
         .modal-content {
             position: relative;
@@ -61,24 +55,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
         }
         .modal-image {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            border-radius: 1rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-radius: 1rem; /* rounded-xl */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Stronger shadow for dark theme */
         }
         .modal-close-button {
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly more visible close button */
             color: white;
             border-radius: 50%;
             width: 2.5rem;
@@ -99,99 +88,34 @@
             width: 100%;
             max-width: 600px;
             max-height: 500px;
-            background: linear-gradient(45deg, #2d3748, #1e293b);
+            background-color: #2d3748; /* Darker background for image frame */
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2); /* Darker shadow */
             margin: 0 auto;
-            transition: all 0.3s ease;
-        }
-        #imageOutputFrame:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
         }
         #imageOutputFrame img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
-        
-        .prompt-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-        .prompt-example {
-            background: #2d3748;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid #4a5568;
-        }
-        .prompt-example:hover {
-            background: #4a5568;
-            transform: translateY(-2px);
-        }
-        
-        .image-placeholder {
-            color: #a0aec0;
-            padding: 40px;
-            text-align: center;
-            font-style: italic;
-        }
-        
-        .key-info {
-            background: rgba(99, 102, 241, 0.1);
-            border-left: 4px solid #6366f1;
-            padding: 12px;
-            border-radius: 4px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        
-        .footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #718096;
-            font-size: 14px;
-        }
     </style>
 </head>
 <body class="bg-gray-900 p-4 sm:p-6 md:p-8">
 
-    <div class="container bg-gray-800 p-6 sm:p-8 rounded-2xl flex flex-col items-center">
-        <div class="w-full flex justify-center mb-6">
-            <div class="bg-indigo-600 px-4 py-1 rounded-full text-sm font-semibold text-white">
-                API Key Configured
-            </div>
-        </div>
-        
-        <h1 class="text-3xl sm:text-4xl font-bold text-gray-100 mb-2 text-center">AI Image Generator</h1>
-        <p class="text-gray-400 mb-6 text-center">Create stunning images with AI using your Google API key</p>
+    <div class="container bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-xl flex flex-col items-center">
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-100 mb-6 text-center">AI Image Generator</h1>
 
         <div class="w-full mb-6">
-            <div class="flex justify-between items-center">
-                <label for="promptInput" class="block text-gray-300 text-sm font-medium mb-2">Enter your prompt:</label>
-                <span class="text-xs text-gray-500">Try these examples ↓</span>
-            </div>
+            <label for="promptInput" class="block text-gray-300 text-sm font-medium mb-2">Enter your prompt:</label>
             <textarea
                 id="promptInput"
                 class="w-full p-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-none h-24 text-gray-100 bg-gray-700 placeholder-gray-400"
                 placeholder="e.g., A cyberpunk city at night with neon signs and flying vehicles"
             ></textarea>
-            
-            <div class="prompt-examples">
-                <div class="prompt-example" data-prompt="A futuristic cityscape at sunset with flying cars and holographic advertisements">Futuristic cityscape</div>
-                <div class="prompt-example" data-prompt="A mystical forest with glowing mushrooms and ancient ruins under a full moon">Mystical forest</div>
-                <div class="prompt-example" data-prompt="An astronaut floating in space with a colorful nebula in the background">Astronaut in space</div>
-                <div class="prompt-example" data-prompt="A steampunk airship flying above Victorian-era London">Steampunk airship</div>
-            </div>
         </div>
 
         <button
@@ -208,29 +132,19 @@
 
         <div id="imageDisplayContainer" class="mt-8 w-full hidden flex flex-col items-center">
             <div id="imageOutputFrame" class="w-full">
-                <div class="image-placeholder" id="placeholderText">Your generated image will appear here</div>
-                <img id="generatedImage" src="" alt="Generated Image" class="w-full h-full object-contain cursor-pointer hidden">
+                <img id="generatedImage" src="" alt="Generated Image" class="w-full h-full object-contain cursor-pointer">
             </div>
-            <p id="imageAltText" class="mt-4 text-gray-300 text-center text-sm italic max-w-lg"></p>
+            <p id="imageAltText" class="mt-4 text-gray-300 text-center text-sm italic"></p>
         </div>
 
         <div id="errorMessage" class="mt-8 hidden bg-red-800 border border-red-700 text-red-200 px-4 py-3 rounded-xl relative w-full" role="alert">
             <strong class="font-bold">Error!</strong>
             <span class="block sm:inline" id="errorText"></span>
         </div>
-        
-        <div class="key-info mt-6 w-full">
-            <p class="text-gray-300 mb-1">API Key Status: <span class="text-green-400 font-medium">Active</span></p>
-            <p class="text-gray-400 text-sm">Using key: AIzaSyB7sn4LAKwBxUIfskILMZPfn7XjYzecOnA</p>
-        </div>
-        
-        <div class="footer">
-            <p class="text-gray-500">Note: API key is visible in source code. For production use, consider using a proxy server.</p>
-        </div>
     </div>
 
     <!-- Full Image Modal -->
-    <div id="imageModal" class="modal-overlay">
+    <div id="imageModal" class="modal-overlay hidden">
         <div class="modal-content">
             <img id="modalImage" src="" alt="Full Size Generated Image" class="modal-image">
             <span id="closeModalButton" class="modal-close-button">&times;</span>
@@ -245,7 +159,6 @@
         const imageDisplayContainer = document.getElementById('imageDisplayContainer');
         const imageOutputFrame = document.getElementById('imageOutputFrame');
         const generatedImage = document.getElementById('generatedImage');
-        const placeholderText = document.getElementById('placeholderText');
         const imageAltText = document.getElementById('imageAltText');
         const errorMessage = document.getElementById('errorMessage');
         const errorText = document.getElementById('errorText');
@@ -255,28 +168,14 @@
         const modalImage = document.getElementById('modalImage');
         const closeModalButton = document.getElementById('closeModalButton');
 
-        // API key configuration
-        const apiKey = "AIzaSyB7sn4LAKwBxUIfskILMZPfn7XjYzecOnA";
-
         // Event listeners
         generateButton.addEventListener('click', generateContent);
-        
-        if (generatedImage) {
-            generatedImage.addEventListener('click', openFullImageModal);
-        }
-        
+        generatedImage.addEventListener('click', openFullImageModal);
         closeModalButton.addEventListener('click', closeFullImageModal);
         imageModal.addEventListener('click', (event) => {
             if (event.target === imageModal) {
                 closeFullImageModal();
             }
-        });
-        
-        // Add event listeners to prompt examples
-        document.querySelectorAll('.prompt-example').forEach(example => {
-            example.addEventListener('click', () => {
-                promptInput.value = example.getAttribute('data-prompt');
-            });
         });
 
         /**
@@ -304,7 +203,7 @@
 
             try {
                 // Step 1: Enhance the user's prompt using gemini-2.0-flash
-                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=`;
                 const geminiPayload = {
                     contents: [
                         {
@@ -325,8 +224,10 @@
                         maxOutputTokens: 250
                     }
                 };
+                // API KEY INSERTED HERE
+                const apiKey = "AIzaSyB7sn4LAKwBxUIfskILMZPfn7XjYzecOnA";
 
-                const geminiResponse = await fetch(geminiApiUrl, {
+                const geminiResponse = await fetch(geminiApiUrl + apiKey, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(geminiPayload)
@@ -349,15 +250,16 @@
 
                 // Step 2: Generate image using imagen-3.0-generate-002 with the enhanced prompt
                 loadingIndicator.querySelector('p').textContent = 'Generating image...';
-                const imagenApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+                const imagenApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=`;
                 const imagenPayload = {
                     instances: { prompt: finalGenerationPrompt },
                     parameters: {
                         "sampleCount": 1
+                        // No aspect_ratio parameter here, as per user's request to remove it
                     }
                 };
 
-                const imagenResponse = await fetch(imagenApiUrl, {
+                const imagenResponse = await fetch(imagenApiUrl + apiKey, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(imagenPayload)
@@ -373,8 +275,6 @@
                 if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
                     const imageUrl = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
                     generatedImage.src = imageUrl;
-                    generatedImage.classList.remove('hidden');
-                    placeholderText.classList.add('hidden');
                     imageAltText.textContent = finalGenerationPrompt;
                     imageDisplayContainer.classList.remove('hidden');
                     // Ensure the image output frame defaults to 1:1 since aspect ratio selection is removed
@@ -392,6 +292,7 @@
                 loadingIndicator.classList.add('hidden');
                 generateButton.disabled = false;
                 generateButton.textContent = 'Generate Image';
+                // promptInput.value = ''; // Keep prompt for easy modifications
             }
         }
 
@@ -402,8 +303,6 @@
             imageDisplayContainer.classList.add('hidden');
             errorMessage.classList.add('hidden');
             generatedImage.src = '';
-            generatedImage.classList.add('hidden');
-            placeholderText.classList.remove('hidden');
             imageAltText.textContent = '';
             closeFullImageModal();
         }
@@ -423,7 +322,7 @@
         function openFullImageModal() {
             if (generatedImage.src) {
                 modalImage.src = generatedImage.src;
-                imageModal.classList.add('active');
+                imageModal.classList.remove('hidden');
             }
         }
 
@@ -431,19 +330,9 @@
          * Closes the full image modal.
          */
         function closeFullImageModal() {
-            imageModal.classList.remove('active');
+            imageModal.classList.add('hidden');
             modalImage.src = '';
         }
-        
-        // Add keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeFullImageModal();
-            }
-            if (e.key === 'Enter' && e.ctrlKey) {
-                generateContent();
-            }
-        });
     </script>
 </body>
 </html>
