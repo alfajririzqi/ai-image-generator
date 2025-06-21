@@ -201,9 +201,13 @@
 
             let finalGenerationPrompt = userPrompt; // Fallback to user's prompt
 
+            // Define apiKey as an empty string to allow Canvas to inject it
+            const apiKey = "";
+
             try {
                 // Step 1: Enhance the user's prompt using gemini-2.0-flash
-                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`; // Removed + apiKey
+                // Corrected: Ensure ?key=${apiKey} is appended
+                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const geminiPayload = {
                     contents: [
                         {
@@ -225,7 +229,7 @@
                     }
                 };
 
-                const geminiResponse = await fetch(geminiApiUrl, { // Removed + apiKey from here
+                const geminiResponse = await fetch(geminiApiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(geminiPayload)
@@ -247,8 +251,9 @@
                 }
 
                 // Step 2: Generate image using imagen-3.0-generate-002 with the enhanced prompt
+                // Corrected: Ensure ?key=${apiKey} is appended
                 loadingIndicator.querySelector('p').textContent = 'Generating image...';
-                const imagenApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict`; // Removed + apiKey
+                const imagenApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
                 const imagenPayload = {
                     instances: { prompt: finalGenerationPrompt },
                     parameters: {
@@ -256,7 +261,7 @@
                     }
                 };
 
-                const imagenResponse = await fetch(imagenApiUrl, { // Removed + apiKey from here
+                const imagenResponse = await fetch(imagenApiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(imagenPayload)
