@@ -86,7 +86,7 @@
         /* Container for the generated image */
         #imageOutputFrame {
             width: 100%;
-            max-width: 600px;
+            max-width: 500px; /* Defaulted to square */
             max-height: 500px;
             background-color: #2d3748; /* Darker background for image frame */
             display: flex;
@@ -203,7 +203,7 @@
 
             try {
                 // Step 1: Enhance the user's prompt using gemini-2.0-flash
-                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=`;
+                const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`; // Removed + apiKey
                 const geminiPayload = {
                     contents: [
                         {
@@ -224,9 +224,8 @@
                         maxOutputTokens: 250
                     }
                 };
-                const apiKey = "";
 
-                const geminiResponse = await fetch(geminiApiUrl + apiKey, {
+                const geminiResponse = await fetch(geminiApiUrl, { // Removed + apiKey from here
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(geminiPayload)
@@ -249,16 +248,15 @@
 
                 // Step 2: Generate image using imagen-3.0-generate-002 with the enhanced prompt
                 loadingIndicator.querySelector('p').textContent = 'Generating image...';
-                const imagenApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=`;
+                const imagenApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict`; // Removed + apiKey
                 const imagenPayload = {
                     instances: { prompt: finalGenerationPrompt },
                     parameters: {
                         "sampleCount": 1
-                        // No aspect_ratio parameter here, as per user's request to remove it
                     }
                 };
 
-                const imagenResponse = await fetch(imagenApiUrl + apiKey, {
+                const imagenResponse = await fetch(imagenApiUrl, { // Removed + apiKey from here
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(imagenPayload)
@@ -291,7 +289,6 @@
                 loadingIndicator.classList.add('hidden');
                 generateButton.disabled = false;
                 generateButton.textContent = 'Generate Image';
-                // promptInput.value = ''; // Keep prompt for easy modifications
             }
         }
 
